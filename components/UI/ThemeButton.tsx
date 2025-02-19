@@ -1,31 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import { toggleTheme, setTheme } from "@/redux/features/themeSlice";
 
 const ThemeButton = () => {
-  const [theme, setTheme] = useState(localStorage.getItem("theme"));
+  const theme = useSelector((state: RootState) => state.theme.theme);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (localStorage.getItem("theme") === "dark") {
-      document.documentElement.classList.add("dark");
-      setTheme("dark");
+    const storedTheme = localStorage.getItem("theme");
+    if (storedTheme) {
+      dispatch(setTheme(storedTheme));
     }
-  }, []);
-
-  const toggleTheme = () => {
-    if (theme === "light") {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-      setTheme("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-      setTheme("light");
-    }
-  };
+  }, [dispatch]);
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={() => dispatch(toggleTheme())}
       className="p-2 rounded-full bg-secondaryLight dark:bg-primaryDark transition-all active:scale-95"
     >
       {theme === "light" ? "🌙" : "☀️"}
