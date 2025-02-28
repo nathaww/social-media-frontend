@@ -9,7 +9,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
   return (
     <div
       className={`w-full bg-white dark:bg-secondaryDark transition-all ${
-        isOpen ? "ml-[25%]" : "ml-0"
+        isOpen ? "ml-[20%]" : "ml-0"
       }`}
     >
       {children}
